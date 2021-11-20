@@ -106,4 +106,9 @@ public class Review implements Serializable {
 			return false;
 		return true;
 	}
+
+	public void setMovie(Long movieId) {
+		this.setMovie(movieId);
+		
+	}
 }
