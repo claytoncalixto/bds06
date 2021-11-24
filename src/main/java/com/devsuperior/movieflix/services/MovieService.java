@@ -1,12 +1,11 @@
 package com.devsuperior.movieflix.services;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +27,7 @@ public class MovieService {
 	
 	@Transactional(readOnly = true)
 	public Page<MovieDTO> findAllPaged(Long genreId, String title, PageRequest pageRequest){
-		List<Genre> genre = (genreId == 0) ? null : Arrays.asList(genreRepository.getOne(genreId));
-		Page<Movie> page = movieRepository.find(genre, title , pageRequest);	
+		Page<Movie> page = movieRepository.findAll(pageRequest);	
 		movieRepository.findMoviesWithGenres(page.getContent());
 		return page.map(x -> new MovieDTO(x, x.getGenre()));	
 	}		
@@ -40,5 +38,26 @@ public class MovieService {
 		Movie entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new MovieDTO(entity);
 	}
+	
+//	@Transactional(readOnly = true)
+//	public MovieDTO findByGenre(Movie genre) {
+//		Optional<Movie> obj = movieRepository.findByGenre(genre);
+//		Movie entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+//		return new MovieDTO(entity);
+//	}
+
+	@Transactional(readOnly = true)
+	public Page<MovieDTO> find(Long genreId, Pageable pageable) {
+		Genre genre = (genreId == 0) ? null : genreRepository.getOne(genreId);
+		Page<Movie> page = movieRepository.find(genre, pageable);	
+		movieRepository.findMoviesWithGenres(page.getContent());
+		return page.map(x -> new MovieDTO(x, x.getGenre()));
+	}
+
+//	public MovieDTO findByRevews(Movie reviews) {
+//		Optional<Movie> obj = Optional.of(movieRepository.findByReviews(reviews));
+//		Movie entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+//		return new MovieDTO(entity);
+//	}
 
 }

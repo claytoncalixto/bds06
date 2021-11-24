@@ -1,6 +1,7 @@
 package com.devsuperior.movieflix.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,18 +11,25 @@ import org.springframework.data.jpa.repository.Query;
 import com.devsuperior.movieflix.entities.Genre;
 import com.devsuperior.movieflix.entities.Movie;
 
-public interface MovieRepository extends JpaRepository<Movie, Long>{
+public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-	@Query("SELECT DISTINCT obj FROM Movie obj INNER JOIN obj.genre gnr WHERE "
-			+ "(COALESCE(:genre) IS NULL OR gnr IN :genre) AND "
-			+ "(LOWER(obj.title) LIKE LOWER(CONCAT('%',:title,'%' )))")
-	Page<Movie> find(List<Genre> genre, String title, Pageable pageable);
+	
+	
+	Optional<Movie> findById(Long id);
+
+	@Query("SELECT obj FROM Movie obj WHERE :genre IS NULL OR obj.genre = :genre ORDER BY obj.title ")
+	Page<Movie> find(Genre genre, Pageable pageable);
 
 	@Query("SELECT obj FROM Movie obj JOIN FETCH obj.genre WHERE obj IN :movies ")
-	List <Movie> findMoviesWithGenres(List<Movie> movies);
-	
-	
+	List<Movie> findMoviesWithGenres(List<Movie> movies);
 
+	List<Movie> findAll();
 
+	@Query("SELECT obj FROM Movie obj JOIN FETCH obj.reviews WHERE OBJ IN :reviews  ")
+	Movie findByReviews(Movie reviews);
+	
+//	@Query("SELECT obj FROM Movie obj WHERE :genre IS NULL OR obj.genre = :genre ")
+//	Optional<Movie> findByGenre(Movie genre);
+	
 
 }
