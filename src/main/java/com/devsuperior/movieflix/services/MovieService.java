@@ -54,10 +54,10 @@ public class MovieService {
 		return page.map(x -> new MovieDTO(x, x.getGenre()));
 	}
 
-//	public MovieDTO findByRevews(Movie reviews) {
-//		Optional<Movie> obj = Optional.of(movieRepository.findByReviews(reviews));
-//		Movie entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-//		return new MovieDTO(entity);
-//	}
+	@Transactional(readOnly = true)
+	public MovieDTO findMovieReviews(Long movieId) {
+		Movie obj = movieRepository.findMovieReviews(movieId);
+		return new MovieDTO(obj);
+	}
 
 }

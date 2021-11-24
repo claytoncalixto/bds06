@@ -21,7 +21,16 @@ public class MovieDTO implements Serializable {
 	
 	private List<GenreDTO> genres = new ArrayList<>();
 	
-	public MovieDTO (Movie entity) {
+	public MovieDTO () {		
+	}
+	
+	public MovieDTO (Movie entity) {		
+		id = entity.getId();
+		title = entity.getTitle();;
+		subTitle = entity.getSubTitle();
+		year = entity.getYear();
+		imgUrl = entity.getImgUrl();
+		synopsis = entity.getImgUrl();
 	}
 
 	public MovieDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis) {
@@ -43,7 +52,7 @@ public class MovieDTO implements Serializable {
 	}
 	
 	public MovieDTO (Movie entity, Set<Genre> genre) {
-		this(entity);
+		//this(entity);
 		genre.forEach(gnr -> this.genre.add(new GenreDTO(gnr)));
 	}
 
