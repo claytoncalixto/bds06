@@ -14,10 +14,10 @@ import com.devsuperior.movieflix.services.exceptions.UnauthorizedException;
 public class AuthService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private  UserRepository userRepository;
 
 	@Transactional(readOnly = true)
-	public User authenticated() {
+	public  User authenticated() {
 		try {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			return userRepository.findByEmail(username);

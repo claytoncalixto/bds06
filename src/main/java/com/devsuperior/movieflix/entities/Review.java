@@ -28,19 +28,6 @@ public class Review implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-//	@ManyToMany(fetch = FetchType.EAGER)
-//	@JoinTable(name = "tb_review_user",
-//	    joinColumns = @JoinColumn(name = "user_id"),
-//	    inverseJoinColumns = @JoinColumn(name = "review_id"))
-//	List<User> user = new ArrayList<>();
-//	
-//	@ManyToMany(fetch = FetchType.EAGER)
-//	@JoinTable(name = "tb_review_movie",
-//	    joinColumns = @JoinColumn(name = "movie_id"),
-//	    inverseJoinColumns = @JoinColumn(name = "review_id"))
-//	List<Movie> movie = new ArrayList<>();
-	
-
 	public Review() {
 	}
 
@@ -109,6 +96,5 @@ public class Review implements Serializable {
 
 	public void setMovie(Long movieId) {
 		this.setMovie(movieId);
-		
 	}
 }

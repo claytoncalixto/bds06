@@ -30,6 +30,7 @@ public class MovieService {
 		Page<Movie> page = movieRepository.findAll(pageRequest);	
 		movieRepository.findMoviesWithGenres(page.getContent());
 		return page.map(x -> new MovieDTO(x, x.getGenre()));	
+		
 	}		
 	
 	@Transactional(readOnly = true)
@@ -38,13 +39,6 @@ public class MovieService {
 		Movie entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new MovieDTO(entity);
 	}
-	
-//	@Transactional(readOnly = true)
-//	public MovieDTO findByGenre(Movie genre) {
-//		Optional<Movie> obj = movieRepository.findByGenre(genre);
-//		Movie entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-//		return new MovieDTO(entity);
-//	}
 
 	@Transactional(readOnly = true)
 	public Page<MovieDTO> find(Long genreId, Pageable pageable) {
@@ -52,12 +46,6 @@ public class MovieService {
 		Page<Movie> page = movieRepository.find(genre, pageable);	
 		movieRepository.findMoviesWithGenres(page.getContent());
 		return page.map(x -> new MovieDTO(x, x.getGenre()));
+		
 	}
-
-	@Transactional(readOnly = true)
-	public MovieDTO findMovieReviews(Long movieId) {
-		Movie obj = movieRepository.findMovieReviews(movieId);
-		return new MovieDTO(obj);
-	}
-
 }

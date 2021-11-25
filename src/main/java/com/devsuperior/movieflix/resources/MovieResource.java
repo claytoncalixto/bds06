@@ -27,24 +27,6 @@ public class MovieResource {
 	@Autowired
 	private ReviewService reviewService;
 	
-//	@GetMapping
-//	public ResponseEntity<Page<MovieDTO>> findAll(
-//			@RequestParam(value = "id", defaultValue = "0") Long id,
-//			@RequestParam(value = "title", defaultValue = "") String title,
-//			@RequestParam(value = "subTitle", defaultValue = "") String subTitle,
-//			@RequestParam(value = "year", defaultValue = "yyyy") Integer year,
-//			@RequestParam(value = "imgURL", defaultValue = "") String imgUrl,
-//			@RequestParam(value = "page", defaultValue = "0") Integer page,
-//			@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
-//			@RequestParam(value = "direction", defaultValue = "ASC") String direction,
-//			@RequestParam(value = "orderBy", defaultValue = "title") String orderBy
-//			) {
-//		
-//		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-//			
-//		Page<MovieDTO> list = movieService.findAllPaged(id, title.trim(), pageRequest);		
-//		return ResponseEntity.ok().body(list);
-//	}
 	
 	@GetMapping
 	public ResponseEntity<Page<MovieDTO>> find(
@@ -59,16 +41,9 @@ public class MovieResource {
 		return ResponseEntity.ok().body(dto);
 	}
 	
-//	@GetMapping(value = "/{genre}")
-//	public ResponseEntity<MovieDTO> findByGenre(@PathVariable Movie genre){
-//		MovieDTO dto = movieService.findByGenre(genre);
-//		return ResponseEntity.ok().body(dto);
-//	}
-	
-	@GetMapping(value = "/{id}/reviews")
-	public ResponseEntity<List<ReviewDTO>> findMovieReviews(@PathVariable Long id){
-		List<ReviewDTO> dto = reviewService.findByMovie(id);
+	@GetMapping(value = "/{movieId}/reviews")
+	public ResponseEntity<List<ReviewDTO>> findMovieReviews(@PathVariable Long movieId){
+		List<ReviewDTO> dto = reviewService.findByMovie(movieId);
 		return ResponseEntity.ok(dto);
 	}
-
 }
