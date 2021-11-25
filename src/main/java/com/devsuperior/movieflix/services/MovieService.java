@@ -24,12 +24,12 @@ public class MovieService {
 	
 	@Autowired
 	private GenreRepository genreRepository;
-	
+
 	@Transactional(readOnly = true)
 	public Page<MovieDTO> findAllPaged(Long genreId, String title, PageRequest pageRequest){
 		Page<Movie> page = movieRepository.findAll(pageRequest);	
 		movieRepository.findMoviesWithGenres(page.getContent());
-		return page.map(x -> new MovieDTO(x, x.getGenre()));	
+		return page.map(x -> new MovieDTO(x));	
 		
 	}		
 	
@@ -45,7 +45,7 @@ public class MovieService {
 		Genre genre = (genreId == 0) ? null : genreRepository.getOne(genreId);
 		Page<Movie> page = movieRepository.find(genre, pageable);	
 		movieRepository.findMoviesWithGenres(page.getContent());
-		return page.map(x -> new MovieDTO(x, x.getGenre()));
+		return page.map(x -> new MovieDTO(x));
 		
 	}
 }

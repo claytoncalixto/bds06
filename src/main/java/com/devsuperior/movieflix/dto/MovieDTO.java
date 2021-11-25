@@ -12,48 +12,25 @@ public class MovieDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private String title;
-	private String subTitle;
-	private Integer year;
-	private String imgUrl;
-	private String synopsis;
-	private Genre genre;
-	
-	private List<GenreDTO> genres = new ArrayList<>();
-	
-	public MovieDTO () {		
-	}
-	
-	public MovieDTO (Movie entity) {		
-		id = entity.getId();
-		title = entity.getTitle();;
-		subTitle = entity.getSubTitle();
-		year = entity.getYear();
-		imgUrl = entity.getImgUrl();
-		synopsis = entity.getSynopsis();
-		//genre = entity.getGenre();		
-	}
+    private String title;
+    private String subTitle;
+    private Integer year;
+    private String imgUrl;
+    private String synopsis;
+    private GenreDTO genre;
 
-	public MovieDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, Genre genre, List<GenreDTO> genres) {
-		this.id = id;
-		this.title = title;
-		this.subTitle = subTitle;
-		this.year = year;
-		this.imgUrl = imgUrl;
-		this.synopsis = synopsis;
-		this.genre = genre;
-		this.genres = genres;
-	}
-	
-	public MovieDTO(Movie entity, Genre genre) {
-		id = entity.getId();
-		title = entity.getTitle();;
-		subTitle = entity.getSubTitle();
-		year = entity.getYear();
-		imgUrl = entity.getImgUrl();
-		synopsis = entity.getSynopsis();
-		genre = entity.getGenre();
-	}
+    public MovieDTO() {
+    }
+
+    public MovieDTO(Movie entity) {
+        id = entity.getId();
+        title = entity.getTitle();
+        subTitle = entity.getSubTitle();
+        year = entity.getYear();
+        imgUrl = entity.getImgUrl();
+        synopsis = entity.getSynopsis();
+        genre = new GenreDTO(entity.getGenre());
+    }
 
 	public Long getId() {
 		return id;
@@ -103,19 +80,11 @@ public class MovieDTO implements Serializable {
 		this.synopsis = synopsis;
 	}
 
-	public Genre getGenre() {
+	public GenreDTO getGenre() {
 		return genre;
 	}
 
-	public void setGenre(Genre genre) {
+	public void setGenre(GenreDTO genre) {
 		this.genre = genre;
 	}
-
-	public List<GenreDTO> getGenres() {
-		return genres;
-	}
-
-	public void setGenres(List<GenreDTO> genres) {
-		this.genres = genres;
-	}	
 }
